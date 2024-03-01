@@ -14,11 +14,11 @@ var listCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("list called")
 		tasks, err := db.AllTasks()
-		if err!= nil{
+		if err != nil {
 			panic(err)
 		}
-		for id, value := range tasks{
-			fmt.Printf("id : %d \t task: %s \n", id, value.Value)
+		for i, task := range tasks {
+			fmt.Printf("number : %d \t task: %s \n", i+1, task.Value)
 		}
 	},
 }
