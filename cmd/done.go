@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/EggsyOnCode/task/db"
 	"github.com/spf13/cobra"
 )
 
@@ -22,6 +23,14 @@ var doneCmd = &cobra.Command{
 			ids = append(ids, integer)
 		}
 		fmt.Print(ids)
+		for _, i := range ids {
+			fmt.Print(i)
+			err := db.DeleteTask(i)
+			if err != nil {
+				panic(err)
+			}
+			fmt.Printf("the task with id %d has been deleted from the task list", i)
+		}
 	},
 }
 
