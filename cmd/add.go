@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/EggsyOnCode/task/db"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +14,11 @@ var addCmd = &cobra.Command{
 	Short: "adds a task to ur task list",
 	Run: func(cmd *cobra.Command, args []string) {
 		task := strings.Join(args, " ")
-		fmt.Printf("the task \"%s\"  has been added to the task list", task)
+		id, err := db.CreateTask(task)
+		if err != nil{
+			panic(err)
+		}
+		fmt.Printf("the task \"%s\"  with id %d has been added to the task list", task, id)
 	},
 }
 
