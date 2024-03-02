@@ -15,7 +15,7 @@ var addCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		task := strings.Join(args, " ")
 		id, err := db.CreateTask(task)
-		if err != nil{
+		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("the task \"%s\"  with id %d has been added to the task list", task, id)
@@ -25,4 +25,8 @@ var addCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(addCmd)
 
+}
+
+func TestAdd()*cobra.Command{
+	return addCmd
 }

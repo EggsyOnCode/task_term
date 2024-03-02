@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -10,7 +11,9 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "task",
 	Short: "Task is a cli tool to manage ur tasks",
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) { 
+		fmt.Fprintln(cmd.OutOrStdout(), "Welcome to Task Cli")
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -22,6 +25,9 @@ func Execute() {
 	}
 }
 
+func TestRoot()*cobra.Command{
+	return rootCmd
+}
 func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,

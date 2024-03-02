@@ -2,7 +2,6 @@ package main
 
 import (
 	"path/filepath"
-
 	"github.com/EggsyOnCode/task/cmd"
 	"github.com/EggsyOnCode/task/db"
 	homeDir "github.com/mitchellh/go-homedir"
