@@ -46,10 +46,10 @@ func doneCmd(dataB db.Database) *cobra.Command {
 	}
 }
 
-func init() {
-	rootCmd.AddCommand(doneCmd(db.GetMockDB()))
+// func init() {
+// 	rootCmd.AddCommand(doneCmd(db.GetDB()))
 
-}
+// }
 
 func TestingDone(db db.Database) *cobra.Command {
 	return doneCmd(db)

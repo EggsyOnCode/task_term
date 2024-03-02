@@ -16,12 +16,17 @@ type Task struct {
 	Value string
 }
 
+type BoltDB struct {
+	*bolt.DB
+}
+
 func InitDB(dbPath string) error {
 	var err error
 	db, err = bolt.Open(dbPath, 0600, &bolt.Options{Timeout: 1 * time.Second})
 	if err != nil {
 		return err
 	}
+
 	// opening a rw tx ;all tx are processed int he closure(kinda like callbacks in js) inside the func args
 	return db.Update(func(tx *bolt.Tx) error {
 		_, err := tx.CreateBucketIfNotExists(taskBucket)
@@ -29,9 +34,9 @@ func InitDB(dbPath string) error {
 	})
 }
 
-func CreateTask(task string) (int, error) {
+func (bd *BoltDB) CreateTask(task string) (int, error) {
 	var id uint64
-	err := db.Update(func(tx *bolt.Tx) error {
+	err := bd.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
 		id64, _ := b.NextSequence()
 		id = id64
@@ -46,9 +51,9 @@ func CreateTask(task string) (int, error) {
 
 }
 
-func AllTasks() ([]Task, error) {
+func (bd *BoltDB) AllTasks() ([]Task, error) {
 	var tasks []Task
-	err := db.View(func(tx *bolt.Tx) error {
+	err := bd.View(func(tx *bolt.Tx) error {
 		// Assume bucket exists and has keys
 		b := tx.Bucket(taskBucket)
 
@@ -72,8 +77,8 @@ func AllTasks() ([]Task, error) {
 	return tasks, nil
 }
 
-func DeleteTask(key int) error {
-	return db.Update(func(tx *bolt.Tx) error {
+func (bd *BoltDB) DeleteTask(key int) error {
+	return bd.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
 		err := b.Delete(itob(key))
 		return err
@@ -89,4 +94,12 @@ func itob(v int) []byte {
 
 func btoi(b []byte) int {
 	return int(binary.BigEndian.Uint64(b))
+}
+
+// getters for DB
+func GetDB() Database {
+	if db == nil {
+		panic("database not initialized")
+	}
+	return &BoltDB{db}
 }

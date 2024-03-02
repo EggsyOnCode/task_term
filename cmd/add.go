@@ -24,10 +24,10 @@ func addCmd(dataB db.Database) *cobra.Command {
 	}
 }
 
-func init() {
-	rootCmd.AddCommand(addCmd(db.GetMockDB()))
+// func init() {
+// 	RootCmd().AddCommand(addCmd(db.GetDB()))
 
-}
+// }
 
 func TestingAdd(db db.Database) *cobra.Command {
 	return addCmd(db)
