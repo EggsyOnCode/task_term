@@ -19,13 +19,13 @@ func listCmd(dataB db.Database) *cobra.Command {
 				panic(err)
 			}
 			for i, task := range tasks {
-				fmt.Printf("number : %d \t task: %s \n", i+1, task.Value)
+				fmt.Fprintf(cmd.OutOrStdout(),"number : %d \t task: %s \n", i+1, task.Value)
 			}
 		},
 	}
 }
 func init() {
-	rootCmd.AddCommand(listCmd(db.GetDB()))
+	rootCmd.AddCommand(listCmd(db.GetMockDB()))
 
 }
 

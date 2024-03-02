@@ -31,15 +31,15 @@ func doneCmd(dataB db.Database) *cobra.Command {
 
 			for _, id := range ids {
 				if id <= 0 || id > len(tasks) {
-					fmt.Println("Invalid task number:", id)
+					fmt.Fprint(cmd.OutOrStdout(), "Invalid task number:", id)
 					continue
 				}
 				task := tasks[id-1]
 				err := dataB.DeleteTask(task.Id)
 				if err != nil {
-					fmt.Printf("Failed to mark \"%d\" as completed. Error: %s\n", id, err)
+					fmt.Fprintf(cmd.OutOrStdout(), "Failed to mark \"%d\" as completed. Error: %s\n", id, err)
 				} else {
-					fmt.Printf("Marked \"%d\" as completed.\n", id)
+					fmt.Fprintf(cmd.OutOrStdout(), "Marked \"%d\" as completed.\n", id)
 				}
 			}
 		},
@@ -47,7 +47,7 @@ func doneCmd(dataB db.Database) *cobra.Command {
 }
 
 func init() {
-	rootCmd.AddCommand(doneCmd(db.GetDB()))
+	rootCmd.AddCommand(doneCmd(db.GetMockDB()))
 
 }
 

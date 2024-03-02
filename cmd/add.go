@@ -19,13 +19,13 @@ func addCmd(dataB db.Database) *cobra.Command {
 			if err != nil {
 				panic(err)
 			}
-			fmt.Fprintf(cmd.OutOrStdout(), "the task \"%s\"  with id %d has been added to the task list", task, id)
+			fmt.Fprintf(cmd.OutOrStdout(), "the task \"%s\" with id %d has been added to the task list", task, id)
 		},
 	}
 }
 
 func init() {
-	rootCmd.AddCommand(addCmd(db.GetDB()))
+	rootCmd.AddCommand(addCmd(db.GetMockDB()))
 
 }
 

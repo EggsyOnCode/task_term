@@ -1,25 +1,26 @@
 package test
 
-
 import (
 	"bytes"
+	"fmt"
 	"testing"
+
 	"github.com/EggsyOnCode/task/cmd"
 	"github.com/EggsyOnCode/task/db"
 )
 
-func TestAdd(t *testing.T) {
+func TestDone(t *testing.T) {
 	//create mock db
 	mockDb := db.GetMockDB()
 	//create the root command
-	cmd := cmd.TestingAdd(mockDb)
+	cmd := cmd.TestingDone(mockDb)
 
 	// redirect the stdout to buffer to capture the output
 	var stdout bytes.Buffer
 	cmd.SetOut(&stdout)
 
 	//set the flags as args
-	args := []string{"do", "test", "prep"}
+	args := []string{"1"}
 	cmd.SetArgs(args)
 
 	//execute teh root.Execute
@@ -28,7 +29,8 @@ func TestAdd(t *testing.T) {
 		t.Errorf("Unexpected Error %v", err)
 	}
 
-	expected := "the task \"do test prep\" with id 1 has been added to the task list"
+	expected := "Marked \"1\" as completed.\n"
+	fmt.Print(args)
 	out := stdout.String()
 	if out != expected {
 		t.Errorf("Expected output %v \n output received %v", expected, out)
