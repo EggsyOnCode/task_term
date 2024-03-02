@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-
 	"github.com/EggsyOnCode/task/db"
 	"github.com/spf13/cobra"
 )
