@@ -9,7 +9,7 @@ import (
 
 func TestRoot(t *testing.T) {
 	//create the root command
-	cmd := cmd.TestRoot()
+	cmd := cmd.TestingRoot()
 
 	// redirect the stdout to buffer to capture the output
 	var stdout bytes.Buffer

@@ -25,7 +25,7 @@ func Execute() {
 	}
 }
 
-func TestRoot()*cobra.Command{
+func TestingRoot()*cobra.Command{
 	return rootCmd
 }
 func init() {

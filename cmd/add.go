@@ -9,24 +9,26 @@ import (
 )
 
 // addCmd represents the add command
-var addCmd = &cobra.Command{
-	Use:   "add",
-	Short: "adds a task to ur task list",
-	Run: func(cmd *cobra.Command, args []string) {
-		task := strings.Join(args, " ")
-		id, err := db.CreateTask(task)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Printf("the task \"%s\"  with id %d has been added to the task list", task, id)
-	},
+func addCmd(dataB db.Database) *cobra.Command {
+	return &cobra.Command{
+		Use:   "add",
+		Short: "adds a task to ur task list",
+		Run: func(cmd *cobra.Command, args []string) {
+			task := strings.Join(args, " ")
+			id, err := dataB.CreateTask(task)
+			if err != nil {
+				panic(err)
+			}
+			fmt.Fprintf(cmd.OutOrStdout(), "the task \"%s\"  with id %d has been added to the task list", task, id)
+		},
+	}
 }
 
 func init() {
-	rootCmd.AddCommand(addCmd)
+	rootCmd.AddCommand(addCmd(db.GetDB()))
 
 }
 
-func TestAdd()*cobra.Command{
-	return addCmd
+func TestingAdd(db db.Database) *cobra.Command {
+	return addCmd(db)
 }
